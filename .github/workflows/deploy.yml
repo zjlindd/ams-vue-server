@@ -38,8 +38,11 @@ jobs:
           cd /var/www/mywebsite
           # 拉取最新的代码
           git pull origin main
-          # 安装依赖并构建
+          # 安装依赖
           npm install
+          #构建
           npm run build
+          #移动dist到nginx静态目录
+          sudo cp -r dist/* /var/www/html/
           # 如果需要，重启 Nginx 服务
           sudo systemctl restart nginx
