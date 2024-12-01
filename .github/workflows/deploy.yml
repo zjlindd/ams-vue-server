@@ -1,0 +1,48 @@
+name: Deploy Frontend Project
+
+on:
+  push:
+    branches:
+      - main  # 触发条件：推送到 `main` 分支
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout the repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'  # 或者你项目使用的 Node.js 版本
+
+    - name: Install dependencies
+      run: |
+        npm install  # 或者你使用的包管理器 yarn install
+
+    - name: Build the project
+      run: |
+        npm run build  # 或者你使用的构建命令
+
+    - name: Deploy to server via SSH
+      uses: appleboy/ssh-action@v0.1.5
+      with:
+        host: ${{ secrets.SERVER_IP }}  # 你的服务器 IP 地址
+        username: ${{ secrets.SERVER_USER }}  # 服务器的用户名
+        key: ${{ secrets.SERVER_SSH_KEY }}  # 存储在 GitHub Secrets 中的 SSH 私钥
+        port: 22
+        script: |
+          # 切换到 /var/www/mywebsite 目录
+          cd /var/www/mywebsite
+          # 拉取最新的代码
+          git pull origin main
+          # 安装依赖
+          npm install
+          #构建
+          npm run build
+          #移动dist到nginx静态目录
+          sudo cp -r dist/* /var/www/html/
+          # 如果需要，重启 Nginx 服务
+          sudo systemctl restart nginx
