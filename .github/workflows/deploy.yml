@@ -34,8 +34,8 @@ jobs:
         key: ${{ secrets.SERVER_SSH_KEY }}  # 存储在 GitHub Secrets 中的 SSH 私钥
         port: 2222
         script: |
-          # 切换到 /var/www/website 目录
-          cd /var/www/website
+          # 切换到 /var/www/mywebsite 目录
+          cd /var/www/mywebsite
           # 拉取最新的代码
           git pull origin main
           # 安装依赖
