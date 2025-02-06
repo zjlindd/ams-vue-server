@@ -32,7 +32,7 @@ jobs:
         host: ${{ secrets.SERVER_IP }}  # 你的服务器 IP 地址
         username: ${{ secrets.SERVER_USER }}  # 服务器的用户名
         key: ${{ secrets.SERVER_SSH_KEY }}  # 存储在 GitHub Secrets 中的 SSH 私钥
-        port: 22
+        port: 2222
         script: |
           # 切换到 /var/www/mywebsite 目录
           cd /var/www/mywebsite
