@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div class="title">周军一是大坏蛋</div>
+    <div class="title"></div>
   </div>
 </template>
 
